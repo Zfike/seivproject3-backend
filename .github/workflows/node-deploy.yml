@@ -41,7 +41,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
           SOURCE: "deploy/"
-          REMOTE_HOST: "project2.eaglesoftwareteam.com"
+          REMOTE_HOST: "project3.eaglesoftwareteam.com"
           REMOTE_USER: ubuntu
           TARGET: "nodeapps/2023/project3/t1"
       - name: Execute SSH commmands on remote server
@@ -49,13 +49,13 @@ jobs:
         env:
           NAME: "Root"
         with:
-          hosts: "ubuntu@project2.eaglesoftwareteam.com"
+          hosts: "ubuntu@project3.eaglesoftwareteam.com"
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
           debug: false
           command: |
-            cd nodeapps/2023/project2/t1
+            cd nodeapps/2023/project3/t1
             npm install
-            sudo systemctl stop course-t1-backend
-            sudo cp course-t1-backend.service /lib/systemd/system/course-t1-backend.service
+            sudo systemctl stop accommodations-t1-backend
+            sudo cp accommodations-t1-backend.service /lib/systemd/system/accommodations-t1-backend.service
             sudo systemctl daemon-reload
-            sudo systemctl start course-t1-backend
+            sudo systemctl start accommodations-t1-backend
