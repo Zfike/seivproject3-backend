@@ -1,4 +1,5 @@
 name: DEPLOY TO STAGING
+# turn off deploy to AWS
 
 on:
   pull_request:
@@ -14,6 +15,8 @@ jobs:
       DB_PW: ${{ secrets.AWS_DB_PW}}
       DB_USER: ${{ secrets.AWS_DB_USER }}
       DB_NAME: ${{ secrets.AWS_DB_NAME }}
+      CLIENT_ID: ${{secrets.CLIENT_ID}}
+      CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,15 +24,17 @@ jobs:
       - uses: actions/setup-node@v1
       - run: npm install
       
-      - name: Create .env file 
-        run: |
+      - run: |
           touch .env
-          echo "DB_HOST='$DB_HOST'" > .env
-          echo "DB_PW='$DB_PW'" >> .env
-          echo "DB_USER='$DB_USER'" >> .env
-          echo "DB_NAME='$DB_NAME'" >> .env
+          echo DB_HOST = "$DB_HOST" >> .env
+          echo DB_PW = "$DB_PW" >> .env
+          echo DB_USER = "$DB_USER" >> .env
+          echo DB_NAME = "$DB_NAME" >> .env
+          echo CLIENT_ID = "$CLIENT_ID" >> .env
+          echo CLIENT_SECRET = "$CLIENT_SECRET" >> .env
 
       - run: npm run bundle
+
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@v2.1.1
         env:
@@ -38,7 +43,7 @@ jobs:
           SOURCE: "deploy/"
           REMOTE_HOST: "project2.eaglesoftwareteam.com"
           REMOTE_USER: ubuntu
-          TARGET: "nodeapps/2023/project2/t1"
+          TARGET: "nodeapps/2023/project3/t1"
       - name: Execute SSH commmands on remote server
         uses: JimCronqvist/action-ssh@master
         env:
