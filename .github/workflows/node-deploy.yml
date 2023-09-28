@@ -23,8 +23,9 @@ jobs:
           ref: dev
       - uses: actions/setup-node@v1
       - run: npm install
-      
-      - run: |
+
+      - name: Create .env file 
+        run: |
           touch .env
           echo "DB_HOST='$DB_HOST'" >> .env
           echo "DB_PW='$DB_PW'" >> .env
