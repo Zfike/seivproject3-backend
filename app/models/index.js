@@ -30,17 +30,17 @@ db.session.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
-// // foreign key for tutorials
-// db.user.hasMany(
-//   db.tutorial,
-//   { as: "tutorial" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
-// db.tutorial.belongsTo(
-//   db.user,
-//   { as: "user" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
+// foreign key for accommodations
+db.userAccommodation.hasMany(
+  db.accommodation,
+  { as: "accommodation" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
+db.tutorial.belongsTo(
+  db.student,
+  { as: "student" },
+  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
+);
 
 // // foreign key for lessons
 // db.tutorial.hasMany(
