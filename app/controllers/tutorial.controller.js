@@ -1,7 +1,7 @@
 const db = require("../models");
-const Tutorial = db.tutorial;
+const Accommodation = db.accommodation;
 const Op = db.Sequelize.Op;
-// Create and Save a new Tutorial
+// Create and Save a new Accommodation
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.title) {
@@ -10,51 +10,51 @@ exports.create = (req, res) => {
     });
     return;
   }
-  // Create a Tutorial
-  const tutorial = {
+  // Create a Accommodation
+  const accommodation = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false,
+    // published: req.body.published ? req.body.published : false,
     userId: req.body.userId,
   };
-  // Save Tutorial in the database
-  Tutorial.create(tutorial)
+  // Save Accommodation in the database
+  Accommodation.create(accommodation)
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial.",
+          err.message || "Some error occurred while creating the Accommodation.",
       });
     });
 };
-// Retrieve all Tutorials from the database.
+// Retrieve all Accommodations from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  Tutorial.findAll({ where: condition })
+  Accommodation.findAll({ where: condition })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials.",
+          err.message || "Some error occurred while retrieving accommodations.",
       });
     });
 };
 
-// Find a single Tutorial with an id
+// Find a single Accommodation with an id
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
-  Tutorial.findAll({ where: { userId: userId } })
+  Accommodation.findAll({ where: { userId: userId } })
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Tutorials for user with id=${userId}.`,
+          message: `Cannot find Accommodations for user with id=${userId}.`,
         });
       }
     })
@@ -62,88 +62,88 @@ exports.findAllForUser = (req, res) => {
       res.status(500).send({
         message:
           err.message ||
-          "Error retrieving Tutorials for user with id=" + userId,
+          "Error retrieving Accommodations for user with id=" + userId,
       });
     });
 };
-// Find a single Tutorial with an id
+// Find a single Accommodation with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Tutorial.findByPk(id)
+  Accommodation.findByPk(id)
     .then((data) => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Tutorial with id=${id}.`,
+          message: `Cannot find Accommodation with id=${id}.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error retrieving Tutorial with id=" + id,
+        message: err.message || "Error retrieving Accommodation with id=" + id,
       });
     });
 };
-// Update a Tutorial by the id in the request
+// Update a Accommodation by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Tutorial.update(req.body, {
+  Accommodation.update(req.body, {
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was updated successfully.",
+          message: "Accommodation was updated successfully.",
         });
       } else {
         res.send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`,
+          message: `Cannot update Accommodation with id=${id}. Maybe Accommodation was not found or req.body is empty!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Error updating Tutorial with id=" + id,
+        message: err.message || "Error updating Accommodation with id=" + id,
       });
     });
 };
-// Delete a Tutorial with the specified id in the request
+// Delete a Accommodation with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Tutorial.destroy({
+  Accommodation.destroy({
     where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was deleted successfully!",
+          message: "Accommodation was deleted successfully!",
         });
       } else {
         res.send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`,
+          message: `Cannot delete Accommodation with id=${id}. Maybe Accommodation was not found!`,
         });
       }
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Could not delete Tutorial with id=" + id,
+        message: err.message || "Could not delete Accommodation with id=" + id,
       });
     });
 };
-// Delete all Tutorials from the database.
+// Delete all Accommodations from the database.
 exports.deleteAll = (req, res) => {
-  Tutorial.destroy({
+  Accommodation.destroy({
     where: {},
     truncate: false,
   })
     .then((nums) => {
-      res.send({ message: `${nums} Tutorials were deleted successfully!` });
+      res.send({ message: `${nums} Accommodations were deleted successfully!` });
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all tutorials.",
+          err.message || "Some error occurred while removing all accommodations.",
       });
     });
 };

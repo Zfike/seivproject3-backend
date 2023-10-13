@@ -1,28 +1,28 @@
 module.exports = (app) => {
-  const tutorials = require("../controllers/tutorial.controller.js");
+  const accommodations = require("../controllers/accommodation.controller.js");
   const { authenticate } = require("../authorization/authorization.js");
   var router = require("express").Router();
 
-  // Create a new Tutorial
-  router.post("/", [authenticate], tutorials.create);
+  // Create a new Accommodation
+  router.post("/", [authenticate], accommodations.create);
 
-  // Retrieve all Tutorials
-  router.get("/", [authenticate], tutorials.findAll);
+  // Retrieve all Accommodations
+  router.get("/", [authenticate], accommodations.findAll);
 
-  // Retrieve all Tutorials for user
-  router.get("/userTut/:userId", [authenticate], tutorials.findAllForUser);
+  // Retrieve all Accommodations for user
+  // router.get("/userTut/:userId", [authenticate], accommodations.findAllForUser);
 
-  // Retrieve a single Tutorial with id
-  router.get("/:id", [authenticate], tutorials.findOne);
+  // Retrieve a single Accommodation with id
+  router.get("/:id", [authenticate], accommodations.findOne);
 
-  // Update a Tutorial with id
-  router.put("/:id", [authenticate], tutorials.update);
+  // Update a Accommodation with id
+  router.put("/:id", [authenticate], accommodations.update);
 
-  // Delete a Tutorial with id
-  router.delete("/:id", [authenticate], tutorials.delete);
+  // Delete a Accommodation with id
+  router.delete("/:id", [authenticate], accommodations.delete);
 
-  // Delete all Tutorials
-  router.delete("/", [authenticate], tutorials.deleteAll);
+  // Delete all Accommodations
+  router.delete("/", [authenticate], accommodations.deleteAll);
 
-  app.use("/tutorial/tutorials", router);
+  app.use("/accommodation-t1/accommodations", router);
 };

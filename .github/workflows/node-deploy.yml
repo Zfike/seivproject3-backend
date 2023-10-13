@@ -27,7 +27,7 @@ jobs:
       - name: Create .env file 
         run: |
           touch .env
-          echo "DB_HOST='$DB_HOST'" >> .env
+          echo "DB_HOST='$DB_HOST'" > .env
           echo "DB_PW='$DB_PW'" >> .env
           echo "DB_USER='$DB_USER'" >> .env
           echo "DB_NAME='$DB_NAME'" >> .env
@@ -42,7 +42,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           ARGS: "-rltgoDzvO --delete"
           SOURCE: "deploy/"
-          REMOTE_HOST: "project2.eaglesoftwareteam.com"
+          REMOTE_HOST: "project3.eaglesoftwareteam.com"
           REMOTE_USER: ubuntu
           TARGET: "nodeapps/2023/project3/t1"
       - name: Execute SSH commmands on remote server
@@ -50,7 +50,7 @@ jobs:
         env:
           NAME: "Root"
         with:
-          hosts: "ubuntu@project2.eaglesoftwareteam.com"
+          hosts: "ubuntu@project3.eaglesoftwareteam.com"
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
           debug: false
           command: |
