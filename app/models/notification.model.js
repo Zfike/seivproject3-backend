@@ -1,16 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
     const Notification = sequelize.define("notification", {
-      notificationId: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      id: {
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-      },
+    },
       content: {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      recipient: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
     });
-    return Course;
+    return Notification;
   };
   

@@ -1,11 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
     const Semester = sequelize.define("semester", {
-      semesterId: {
-        type: Sequelize.STRING,
-        allowNull: false,
+      id: {
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-      },
+    },
       startDate: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -15,6 +14,6 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
     });
-    return Course;
+    return Semester;
   };
   

@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const AccommodationCategory = sequelize.define("accommodationCategory", { 
-        categoryId: {
+        id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -14,5 +14,5 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
     })
-    return Accommodation
+    return AccommodationCategory
 }

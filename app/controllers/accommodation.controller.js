@@ -12,11 +12,10 @@ exports.create = (req, res) => {
   }
   // Create a Accommodation
   const accommodation = {
+    id: req.body.id,
     title: req.body.title,
     desc: req.body.desc,
     category: req.body.category,
-    sharingPermission: req.body.sharingPermission ? req.body.sharingPermission : false,
-    userAccommodationId: req.body.userId,
   };
   // Save Accommodation in the database
   Accommodation.create(accommodation)

@@ -1,5 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
     const Section = sequelize.define("section", {
+      id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       dept: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -21,17 +26,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      description: {
+      desc: {
         type: Sequelize.STRING,
-      },
-      semester: {
-        type: Sequelize.STRING,
-        allowNull: false,
       },
       meetingTime: {
         type: Sequelize.STRING,
       }
     });
-    return Course;
+    return Section;
   };
   

@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const Student = sequelize.define("student", {
-      studentId: {
+      id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -23,6 +23,6 @@ module.exports = (sequelize, Sequelize) => {
       },
     });
   
-    return User;
+    return Student;
   };
   
