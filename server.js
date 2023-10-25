@@ -29,7 +29,16 @@ app.get("/", (req, res) => {
 
 require("./app/routes/auth.routes.js")(app);
 require("./app/routes/user.routes")(app);
-// require("./app/routes/tutorial.routes")(app);
+require("./app/routes/accommodation.routes")(app);
+require("./app/routes/accommodationCategory.routes")(app);
+require("./app/routes/faculty.routes")(app);
+require("./app/routes/notification.routes")(app);
+require("./app/routes/section.routes")(app);
+require("./app/routes/semester.routes")(app);
+require("./app/routes/student.routes")(app);
+require("./app/routes/studentCourse.routes")(app);
+require("./app/routes/userAccommodation.routes")(app);
+
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3021;

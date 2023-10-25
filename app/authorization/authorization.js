@@ -1,10 +1,17 @@
 const db = require("../models");
 const Session = db.session;
+const skipAuthorization = false;
 
 authenticate = (req, res, next) => {
   let token = null;
   console.log("authenticate");
   let authHeader = req.get("authorization");
+
+  if (skipAuthorization) {
+    next();
+    return;
+  }
+
   if (authHeader != null) {
     if (authHeader.startsWith("Bearer ")) {
       token = authHeader.slice(7);
