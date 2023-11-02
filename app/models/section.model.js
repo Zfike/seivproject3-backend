@@ -32,7 +32,10 @@ module.exports = (sequelize, Sequelize) => {
       meetingTime: {
         type: Sequelize.STRING,
       }
-    });
+    },    
+    {
+      timestamps: false, 
+      })
     return Section;
-  };
+  }
   
