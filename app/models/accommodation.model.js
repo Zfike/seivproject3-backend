@@ -17,9 +17,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-    },
-    {
-        timestamps: false, 
-        })
+    }, {
+        timestamps: false,
+      });
     return Accommodation
 }
