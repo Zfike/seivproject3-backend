@@ -5,7 +5,10 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true,
             primaryKey: true,
         },
-    });
+    },
+    {
+        timestamps: false, 
+        })
     return StudentCourse;
-  };
+  }
   
