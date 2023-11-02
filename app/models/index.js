@@ -67,7 +67,7 @@ db.accommodationCategory.hasMany(
   { as: "userAccommodation2" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
-db.userAccommodation.belongsTo(
+db.accommodationCategory.belongsTo(
   db.accommodation,
   { as: "accommodation1" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
