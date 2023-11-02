@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const UserAccommodation = sequelize.define("notification", {
+    const UserAccommodation = sequelize.define("userAccommodation", {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,

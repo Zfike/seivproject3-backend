@@ -1,11 +1,10 @@
 require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
-
 const app = express();
-
 const db = require("./app/models");
+const nodemailer = require("nodemailer");
+const emailSender = require('./emailSender.js');
 
 db.sequelize.sync();
 
@@ -39,6 +38,15 @@ require("./app/routes/student.routes")(app);
 require("./app/routes/studentCourse.routes")(app);
 require("./app/routes/userAccommodation.routes")(app);
 
+app.post('/send-email', async (req, res) => {
+  try {
+    const result = await emailSender.sendTestEmail();
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('Error sending test email:', error);
+    res.status(500).send('Error sending test email.');
+  }
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3021;

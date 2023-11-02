@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const StudentCourse = sequelize.define("notification", {
+    const StudentCourse = sequelize.define("studentCourse", {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
