@@ -24,6 +24,6 @@ module.exports = (app) => {
     // Delete all Accommodations
     router.delete("/", [authenticate], sections.deleteAll);
   
-    app.use("/accommodations-t1/section", router);
+    app.use("/accommodations-t1/sections", router);
   };
   
