@@ -39,11 +39,11 @@ require("./app/routes/studentCourse.routes")(app);
 require("./app/routes/userAccommodation.routes")(app);
 
 //For static assets
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "../seivproject3-frontend")))
 
 //Catch all route for Vue
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "", "../seivproject3-frontend", "index.html"));
 });
 
 // set port, listen for requests
