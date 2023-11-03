@@ -2,9 +2,9 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const path = require("path")
 
 const app = express();
-
 const db = require("./app/models");
 
 db.sequelize.sync();
@@ -18,7 +18,6 @@ app.options("*", cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
@@ -39,6 +38,13 @@ require("./app/routes/student.routes")(app);
 require("./app/routes/studentCourse.routes")(app);
 require("./app/routes/userAccommodation.routes")(app);
 
+//For static assets
+app.use(express.static(path.join(__dirname, "public")))
+
+//Catch all route for Vue
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3021;
