@@ -45,6 +45,7 @@ exports.findAll = (req, res) => {
 // Find a all UserAccommodations for a user with an id
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
+  console.log("Looking for UserAccommodations with userId:", userId); // Log the userId
   UserAccommodation.findAll({ where: { userId: userId } })
     .then((data) => {
       if (data) {
