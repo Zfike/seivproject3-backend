@@ -6,7 +6,6 @@ const path = require("path");
 const history = require('connect-history-api-fallback');
 
 const app = express();
-
 const db = require("./app/models");
 
 db.sequelize.sync();
@@ -20,7 +19,6 @@ app.options("*", cors());
 
 // parse requests of content-type - application/json
 app.use(express.json());
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
@@ -43,6 +41,7 @@ app.use(history());
 // Assuming the backend and frontend are siblings in the directory structure
 // and the Vite build output goes to "dist" directory in the frontend.
 app.use(express.static(path.resolve(__dirname, '..', 'seivproject3-frontend', 'dist')));
+
 
 // Set port, listen for requests
 const PORT = process.env.PORT || 3021;
