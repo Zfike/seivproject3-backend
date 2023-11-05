@@ -1,31 +1,25 @@
 const db = require("../models");
 const UserAccommodation = db.userAccommodation;
 const Op = db.Sequelize.Op;
+
 // Create and Save a new UserAccommodation
 exports.create = (req, res) => {
-  // Validate request
-  if (!req.body.title) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
-  // Create a UserAccommodation
-  const userAccommodation = {
-    id: req.body.id,
+  // Assuming req.body has userId, permission, accommodationCategoryId, and description
+  UserAccommodation.create({
+    userId: req.body.userId,
     permission: req.body.permission,
-  };
-  // Save UserAccommodation in the database
-  UserAccommodation.create(userAccommodation)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the UserAccommodation.",
-      });
+    accommodationCategoryId: req.body.accommodationCategoryId,
+    description: req.body.description // Include the description from the request body
+  })
+  .then((userAccommodation) => {
+    res.send(userAccommodation);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: "Error creating UserAccommodation",
+      error: err.message
     });
+  });
 };
 
 // Retrieve all UserAccommodations from the database.

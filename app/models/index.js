@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
+  operatorsAliases: 0,
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,
@@ -10,6 +11,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: dbConfig.pool.idle,
   },
 });
+
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
@@ -26,125 +28,44 @@ db.semester = require("./semester.model.js")(sequelize, Sequelize);
 db.student = require("./student.model.js")(sequelize, Sequelize);
 db.studentCourse = require("./studentCourse.model.js")(sequelize, Sequelize);
 
-// foreign key for session
-db.user.hasMany(
-  db.session,
-  { as: "session" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.session.belongsTo(
-  db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// Users and Sessions
+db.user.hasMany(db.session, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.session.belongsTo(db.user, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
-// foreign key for accommodations
-db.accommodation.hasMany(
-  db.userAccommodation,
-  { as: "userAccommodation" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.userAccommodation.belongsTo(
-  db.accommodation,
-  { as: "accommodation" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// Accommodations and User Accommodations
+db.accommodation.hasMany(db.userAccommodation, { foreignKey: 'accommodationId', onDelete: 'CASCADE' });
+db.userAccommodation.belongsTo(db.accommodation, { foreignKey: 'accommodationId', onDelete: 'CASCADE' });
 
-db.user.hasMany(
-  db.userAccommodation,
-  { as: "userAccommodation1" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.userAccommodation.belongsTo(
-  db.user,
-  { as: "user" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// Users and User Accommodations
+db.user.hasMany(db.userAccommodation, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.userAccommodation.belongsTo(db.user, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
-// foreign key for accommodationCategory
-db.accommodationCategory.hasMany(
-  db.userAccommodation,
-  { as: "userAccommodation2" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// Accommodation Categories and User Accommodations
+db.accommodationCategory.hasMany(db.userAccommodation, { foreignKey: 'accommodationCategoryId', onDelete: 'CASCADE' });
+db.userAccommodation.belongsTo(db.accommodationCategory, { foreignKey: 'accommodationCategoryId', onDelete: 'CASCADE' });
 
-// foreign key for userAccommodations
-db.userAccommodation.hasMany(
-  db.notification,
-  { as: "notification" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// Notifications and User Accommodations
+db.userAccommodation.hasMany(db.notification, { foreignKey: 'userAccommodationId', onDelete: 'CASCADE' });
+db.notification.belongsTo(db.userAccommodation, { foreignKey: 'userAccommodationId', onDelete: 'CASCADE' });
 
-db.faculty.belongsTo(
-  db.userAccommodation,
-  { as: "userAccommodation3" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
+// Faculties and User Accommodations
+db.faculty.belongsTo(db.userAccommodation, { foreignKey: 'facultyId', onDelete: 'CASCADE' });
+db.userAccommodation.hasOne(db.faculty, { foreignKey: 'facultyId', onDelete: 'CASCADE' });
 
-// Connect accommodationCategory to userAccommodation
-db.userAccommodation.belongsTo(db.accommodationCategory, {
-  foreignKey: 'accommodationCategoryId',
-  as: 'accommodationCategory'
-});
+// Semesters and User Accommodations
+db.semester.hasMany(db.userAccommodation, { foreignKey: 'semesterId', onDelete: 'CASCADE' });
+db.userAccommodation.belongsTo(db.semester, { foreignKey: 'semesterId', onDelete: 'CASCADE' });
 
-// Connect accommodationCategory to userAccommodation
-db.accommodationCategory.hasMany(db.userAccommodation, {
-  foreignKey: 'accommodationCategoryId',
-  as: 'userAccommodations'
-});
+// Sections and Student Courses
+db.section.hasMany(db.studentCourse, { foreignKey: 'sectionId', onDelete: 'CASCADE' });
+db.studentCourse.belongsTo(db.section, { foreignKey: 'sectionId', onDelete: 'CASCADE' });
 
+// Faculties and Sections
+db.faculty.belongsTo(db.section, { foreignKey: 'facultyId', onDelete: 'CASCADE' });
+db.section.hasOne(db.faculty, { foreignKey: 'facultyId', onDelete: 'CASCADE' });
 
-// foreign key for semester
-db.semester.hasMany(
-  db.userAccommodation,
-  { as: "userAccommodation4" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.section.belongsTo(
-  db.semester,
-  { as: "semester" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.userAccommodation.belongsTo(
-  db.semester,
-  { as: "semester" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
-// foreign key for section
-db.section.hasMany(
-  db.studentCourse,
-  { as: "userAccommodation5" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.studentCourse.belongsTo(
-  db.section,
-  { as: "section" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-db.faculty.belongsTo(
-  db.section,
-  { as: "section" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
-// foreign key for studentCourse
-db.student.belongsTo(
-  db.studentCourse,
-  { as: "studentCourse" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
-
-// // foreign key for lessons
-// db.tutorial.hasMany(
-//   db.lesson,
-//   { as: "lesson" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
-// db.lesson.belongsTo(
-//   db.tutorial,
-//   { as: "tutorial" },
-//   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-// );
+// Students and Student Courses
+db.student.belongsTo(db.studentCourse, { foreignKey: 'studentId', onDelete: 'CASCADE' });
+db.studentCourse.hasOne(db.student, { foreignKey: 'studentId', onDelete: 'CASCADE' });
 
 module.exports = db;
