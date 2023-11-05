@@ -27,6 +27,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 // Retrieve all UserAccommodations from the database.
 exports.findAll = (req, res) => {
   UserAccommodation.findAll({
@@ -54,27 +55,40 @@ exports.findAll = (req, res) => {
 };
 
 
-// Find a all UserAccommodations for a user with an id
+// Find all UserAccommodations for a user with an id
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
   console.log("Looking for UserAccommodations with userId:", userId); // Log the userId
-  UserAccommodation.findAll({ where: { userId: userId } })
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find UserAccommodations for user with id=${userId}.`,
-        });
+  UserAccommodation.findAll({
+    where: { userId: userId },
+    include: [
+      {
+        model: db.user,
+        as: 'user',
+        attributes: ['fName', 'lName'],
+      },
+      {
+        model: db.accommodationCategory,
+        as: 'accommodationCategory',
+        attributes: ['categoryName'],
       }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Error retrieving UserAccommodations for user with id=" + userId,
+    ]
+  })
+  .then((data) => {
+    if (data.length) { // Check if the data array is not empty
+      res.send(data);
+    } else {
+      res.status(404).send({
+        message: `Cannot find UserAccommodations for user with id=${userId}.`,
       });
+    }
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message ||
+        "Error retrieving UserAccommodations for user with id=" + userId,
     });
+  });
 };
 
 // Find a single UserAccommodation with an id
