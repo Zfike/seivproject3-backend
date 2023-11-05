@@ -81,6 +81,18 @@ db.faculty.belongsTo(
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
 
+// Connect accommodationCategory to userAccommodation
+db.userAccommodation.belongsTo(db.accommodationCategory, {
+  foreignKey: 'accommodationCategoryId',
+  as: 'accommodationCategory'
+});
+
+// Connect accommodationCategory to userAccommodation
+db.accommodationCategory.hasMany(db.userAccommodation, {
+  foreignKey: 'accommodationCategoryId',
+  as: 'userAccommodations'
+});
+
 
 // foreign key for semester
 db.semester.hasMany(

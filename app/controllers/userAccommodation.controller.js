@@ -29,19 +29,31 @@ exports.create = (req, res) => {
 };
 // Retrieve all UserAccommodations from the database.
 exports.findAll = (req, res) => {
-  const id = req.query.id;
-  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
-  UserAccommodation.findAll({ where: condition })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving userAccommodations.",
-      });
+  UserAccommodation.findAll({
+    include: [
+      {
+        model: db.user,
+        as: 'user',
+        attributes: ['fName', 'lName'],
+      },
+      {
+        model: db.accommodationCategory,
+        as: 'accommodationCategory',
+        attributes: ['categoryName'],
+      }
+    ]
+  })
+  .then((data) => {
+    res.send(data);
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving userAccommodations.",
     });
+  });
 };
+
+
 // Find a all UserAccommodations for a user with an id
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
@@ -64,25 +76,40 @@ exports.findAllForUser = (req, res) => {
       });
     });
 };
+
 // Find a single UserAccommodation with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  UserAccommodation.findByPk(id)
-    .then((data) => {
-      if (data) {
-        res.send(data);
-      } else {
-        res.status(404).send({
-          message: `Cannot find UserAccommodation with id=${id}.`,
-        });
+  UserAccommodation.findByPk(id, {
+    include: [
+      {
+        model: db.user,
+        as: 'user',
+        attributes: ['fName', 'lName'],
+      },
+      {
+        model: db.accommodationCategory,
+        as: 'accommodationCategory',
+        attributes: ['categoryName'],
       }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving UserAccommodation with id=" + id,
+    ]
+  })
+  .then((data) => {
+    if (data) {
+      res.send(data);
+    } else {
+      res.status(404).send({
+        message: `Cannot find UserAccommodation with id=${id}.`,
       });
+    }
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message || "Error retrieving UserAccommodation with id=" + id,
     });
+  });
 };
+
 // Update a UserAccommodation by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
