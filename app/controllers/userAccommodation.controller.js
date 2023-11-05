@@ -9,7 +9,8 @@ exports.create = (req, res) => {
     userId: req.body.userId,
     permission: req.body.permission,
     accommodationCategoryId: req.body.accommodationCategoryId,
-    description: req.body.description // Include the description from the request body
+    description: req.body.description, // Include the description from the request body
+    status: req.body.status || 'pending'  // Set status to 'pending' by default if not provided
   })
   .then((userAccommodation) => {
     res.send(userAccommodation);
@@ -124,23 +125,24 @@ exports.update = (req, res) => {
   UserAccommodation.update(req.body, {
     where: { id: id },
   })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "UserAccommodation was updated successfully.",
-        });
-      } else {
-        res.send({
-          message: `Cannot update UserAccommodation with id=${id}. Maybe UserAccommodation was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error updating UserAccommodation with id=" + id,
+  .then((num) => {
+    if (num == 1) {
+      res.send({
+        message: "UserAccommodation was updated successfully.",
       });
+    } else {
+      res.send({
+        message: `Cannot update UserAccommodation with id=${id}. Maybe UserAccommodation was not found or req.body is empty!`,
+      });
+    }
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message || "Error updating UserAccommodation with id=" + id,
     });
+  });
 };
+
 // Delete a UserAccommodation with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
