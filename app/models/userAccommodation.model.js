@@ -21,6 +21,12 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: true // or false if you want to make it required
     },
+    status: {
+      type: Sequelize.ENUM,
+      values: ['pending', 'approved', 'declined'],
+      defaultValue: 'pending',
+      allowNull: false
+    },
     // Add other fields such as semesterId if necessary
     // semesterId: {
     //   type: Sequelize.INTEGER,
