@@ -8,7 +8,7 @@ const history = require('connect-history-api-fallback');
 const app = express();
 const db = require("./app/models");
 const nodemailer = require("nodemailer");
-const emailSender = require('./emailSender.js');
+const emailSender = require('./app/services/emailSender.js');
 
 db.sequelize.sync();
 
