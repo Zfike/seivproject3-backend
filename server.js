@@ -13,11 +13,12 @@ const emailSender = require('./app/services/emailSender.js');
 db.sequelize.sync();
 
 var corsOptions = {
-  origin: "http://localhost:8081",
+  origin: ["http://localhost:8081", "https://project3.eaglesoftwareteam.com"],
+  // credentials: true, // You might need this if your front-end uses credentials like cookies or auth headers
 };
 
 app.use(cors(corsOptions));
-app.options("*", cors());
+app.options("*", cors(corsOptions)); // Enable pre-flight for all routes
 
 // parse requests of content-type - application/json
 app.use(express.json());
