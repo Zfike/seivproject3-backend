@@ -48,6 +48,7 @@ db.userAccommodation.belongsTo(db.accommodationCategory, { foreignKey: 'accommod
 db.userAccommodation.hasMany(db.notification, { foreignKey: 'userAccommodationId', onDelete: 'CASCADE' });
 db.notification.belongsTo(db.userAccommodation, { foreignKey: 'userAccommodationId', onDelete: 'CASCADE' });
 
+
 // Faculties and User Accommodations
 db.faculty.belongsTo(db.userAccommodation, { foreignKey: 'facultyId', onDelete: 'CASCADE' });
 db.userAccommodation.hasOne(db.faculty, { foreignKey: 'facultyId', onDelete: 'CASCADE' });

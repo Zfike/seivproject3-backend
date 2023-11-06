@@ -1,5 +1,4 @@
 require("dotenv").config();
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -7,6 +6,8 @@ const history = require('connect-history-api-fallback');
 
 const app = express();
 const db = require("./app/models");
+const nodemailer = require("nodemailer");
+const emailSender = require('./emailSender.js');
 
 db.sequelize.sync();
 
@@ -34,6 +35,32 @@ require("./app/routes/semester.routes")(app);
 require("./app/routes/student.routes")(app);
 require("./app/routes/studentCourse.routes")(app);
 require("./app/routes/userAccommodation.routes")(app);
+
+
+app.post('/send-email', async (req, res) => {
+  try {
+    // Access user information from the authentication process
+    const user = req.user; // Adjust this to match how you store user information
+
+    if (user && user.email) {
+      // Create a notification object
+      const notificationData = {
+        recipient: user.email, // Use the user's email as the recipient
+        content: 'Your email content here', // Customize the email content
+      };
+
+      const notification = await db.notification.create(notificationData)
+      // Send the email using the notification data
+      const result = await emailSender.sendEmail(notification);
+      res.status(200).send(result);
+    } else {
+      res.status(403).send('User not authenticated or missing email.');
+    }
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).send('Error sending email.');
+  }
+});
 
 // Handle SPA client routing, fallback to index.html for any other route
 app.use(history());
