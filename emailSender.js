@@ -10,26 +10,26 @@ const transporter = nodemailer.createTransport({
 });
 
 // Function to send a test email
-async function sendTestEmail() {
+async function sendEmail(notification) {
   try {
     // Configure the email data
     const mailOptions = {
       from: 'z.fike@eagles.oc.edu',
       to: 'z.fike@eagles.oc.edu',
       subject: 'Accommodation Request',
-      text: 'This is a test email.' // Include your test content
+      text: notification.content // Include your test content
     };
 
     // Send the email
     const info = await transporter.sendMail(mailOptions);
-    console.log('Test Email sent: ' + info.response);
-    return 'Test Email sent successfully.';
+    console.log('Email sent: ' + info.response);
+    return 'Email sent successfully.';
   } catch (error) {
     console.error(error);
-    throw 'Test Email could not be sent.';
+    throw 'Email could not be sent.';
   }
 }
 
 module.exports = {
-  sendTestEmail,
+  sendEmail,
 };

@@ -67,11 +67,6 @@ db.accommodationCategory.hasMany(
   { as: "userAccommodation2" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
-db.userAccommodation.belongsTo(
-  db.accommodation,
-  { as: "accommodation1" },
-  { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
-);
 
 // foreign key for userAccommodations
 db.userAccommodation.hasMany(
@@ -85,7 +80,6 @@ db.faculty.belongsTo(
   { as: "userAccommodation3" },
   { foreignKey: { allowNull: false }, onDelete: "CASCADE" }
 );
-
 
 // foreign key for semester
 db.semester.hasMany(
