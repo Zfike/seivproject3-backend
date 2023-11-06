@@ -39,28 +39,26 @@ require("./app/routes/userAccommodation.routes")(app);
 
 app.post('/send-email', async (req, res) => {
   try {
-    // Access user information from the authentication process
-    const user = req.user; // Adjust this to match how you store user information
+    // Get the email details from the request body
+    const emailDetails = req.body;
 
-    if (user && user.email) {
-      // Create a notification object
-      const notificationData = {
-        recipient: user.email, // Use the user's email as the recipient
-        content: 'Your email content here', // Customize the email content
-      };
+    // You may need to verify and construct the email details as needed
+    const notificationData = {
+      recipient: 'jaxen.mcray@eagles.oc.edu', // Replace with actual recipient email
+      subject: emailDetails.subject,
+      content: emailDetails.content,
+    };
 
-      const notification = await db.notification.create(notificationData)
-      // Send the email using the notification data
-      const result = await emailSender.sendEmail(notification);
-      res.status(200).send(result);
-    } else {
-      res.status(403).send('User not authenticated or missing email.');
-    }
+    // Send the email using the email sender module
+    const result = await emailSender.sendEmail(notificationData);
+    res.status(200).send(result);
+
   } catch (error) {
     console.error('Error sending email:', error);
     res.status(500).send('Error sending email.');
   }
 });
+
 
 // Handle SPA client routing, fallback to index.html for any other route
 app.use(history());
