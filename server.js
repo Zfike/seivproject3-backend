@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const path = require("path")
+const path = require("path");
+const history = require('connect-history-api-fallback');
 
 const app = express();
 const db = require("./app/models");
@@ -22,11 +23,7 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
-
+// API routes
 require("./app/routes/auth.routes.js")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/accommodation.routes")(app);
@@ -38,6 +35,7 @@ require("./app/routes/semester.routes")(app);
 require("./app/routes/student.routes")(app);
 require("./app/routes/studentCourse.routes")(app);
 require("./app/routes/userAccommodation.routes")(app);
+
 
 app.post('/send-email', async (req, res) => {
   try {
@@ -63,15 +61,16 @@ app.post('/send-email', async (req, res) => {
     res.status(500).send('Error sending email.');
   }
 });
-//For static assets
-app.use(express.static(path.join(__dirname, "../seivproject3-frontend")))
 
-//Catch all route for Vue
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "", "../seivproject3-frontend", "index.html"));
-});
+// Handle SPA client routing, fallback to index.html for any other route
+app.use(history());
 
-// set port, listen for requests
+// Assuming the backend and frontend are siblings in the directory structure
+// and the Vite build output goes to "dist" directory in the frontend.
+app.use(express.static(path.resolve(__dirname, '..', 'seivproject3-frontend', 'dist')));
+
+
+// Set port, listen for requests
 const PORT = process.env.PORT || 3021;
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
