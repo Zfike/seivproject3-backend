@@ -15,8 +15,8 @@ async function sendEmail(notification) {
     // Configure the email data
     const mailOptions = {
       from: 'z.fike@eagles.oc.edu',
-      to: 'z.fike@eagles.oc.edu',
-      subject: 'Accommodation Request',
+      to: notification.recipient,
+      subject: notification.subject,
       text: notification.content // Include your test content
     };
 
