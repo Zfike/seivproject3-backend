@@ -21,6 +21,7 @@ db.session = require("./session.model.js")(sequelize, Sequelize);
 db.accommodation = require("./accommodation.model.js")(sequelize, Sequelize);
 db.accommodationCategory = require("./accommodationCategory.model.js")(sequelize, Sequelize);
 db.userAccommodation = require("./userAccommodation.model.js")(sequelize, Sequelize);
+db.userAccommodationRequest = require("./userAccommodationRequest.model.js")(sequelize, Sequelize);
 db.faculty = require("./faculty.model.js")(sequelize, Sequelize);
 db.notification = require("./notification.model.js")(sequelize, Sequelize);
 db.section = require("./section.model.js")(sequelize, Sequelize);
@@ -33,8 +34,16 @@ db.user.hasMany(db.session, { foreignKey: 'userId', onDelete: 'CASCADE' });
 db.session.belongsTo(db.user, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 // Accommodations and User Accommodations
-db.accommodation.hasMany(db.userAccommodation, { foreignKey: 'accommodationId', onDelete: 'CASCADE' });
-db.userAccommodation.belongsTo(db.accommodation, { foreignKey: 'accommodationId', onDelete: 'CASCADE' });
+// db.accommodation.hasMany(db.userAccommodation, { foreignKey: 'accommodationId', onDelete: 'CASCADE' });
+// db.userAccommodation.belongsTo(db.accommodation, { foreignKey: 'accommodationId', onDelete: 'CASCADE' });
+
+// UserAccommodationRequests and UserAccommodations (One-to-One relationship)
+db.userAccommodationRequest.hasMany(db.userAccommodation, { foreignKey: 'userAccommodationRequestId', onDelete: 'CASCADE' });
+db.userAccommodation.belongsTo(db.userAccommodationRequest, { foreignKey: 'userAccommodationRequestId', onDelete: 'CASCADE' });
+
+// Users and User Accommodation Requests
+db.user.hasMany(db.userAccommodationRequest, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.userAccommodationRequest.belongsTo(db.user, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 // Users and User Accommodations
 db.user.hasMany(db.userAccommodation, { foreignKey: 'userId', onDelete: 'CASCADE' });
