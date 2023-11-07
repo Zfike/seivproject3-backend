@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const UserAccommodation = sequelize.define("userAccommodation", {
+  const userAccommodationRequest = sequelize.define("userAccommodationRequest", {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
@@ -13,21 +13,19 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false
     },
-    userAccommodationRequestId: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
-    accommodationCategoryId: {
-      type: Sequelize.INTEGER,
-      allowNull: false
-    },
     description: {
       type: Sequelize.STRING,
       allowNull: true
+    },
+    status: {
+      type: Sequelize.ENUM,
+      values: ['pending', 'approved', 'declined'],
+      defaultValue: 'pending',
+      allowNull: false
     },
   }, {
     timestamps: false
   });
 
-  return UserAccommodation;
+  return userAccommodationRequest;
 };

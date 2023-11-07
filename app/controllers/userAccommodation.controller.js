@@ -7,6 +7,7 @@ exports.create = (req, res) => {
   // Assuming req.body has userId, permission, accommodationCategoryId, and description
   UserAccommodation.create({
     userId: req.body.userId,
+    userAccommodationRequestId: req.body.userAccommodationRequestId,
     permission: req.body.permission,
     accommodationCategoryId: req.body.accommodationCategoryId,
     description: req.body.description, // Include the description from the request body
