@@ -11,7 +11,7 @@ exports.create = (req, res) => {
     permission: req.body.permission,
     accommodationCategoryId: req.body.accommodationCategoryId,
     description: req.body.description, // Include the description from the request body
-    status: req.body.status || 'pending'  // Set status to 'pending' by default if not provided
+    status: req.body.status || 'Pending'  // Set status to 'pending' by default if not provided
   })
   .then((userAccommodation) => {
     res.send(userAccommodation);
