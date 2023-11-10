@@ -61,6 +61,24 @@ exports.findAll = (req, res) => {
   });
 };
 
+// Retrieve all Accommodations by accommodationCategoryId from the database.
+exports.findAllByCategoryId = (req, res) => {
+  const accommodationCategoryId = req.params.accommodationCategoryId;
+
+  Accommodation.findAll({ 
+    where: { accommodationCategoryId: accommodationCategoryId }
+  })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving accommodations.",
+      });
+    });
+};
+
 
 // Find a single Accommodation with an id
 exports.findAllForUser = (req, res) => {
