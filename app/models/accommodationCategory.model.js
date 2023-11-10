@@ -14,7 +14,8 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
     }, {
+        tableName: 'accommodationCategories',
         timestamps: false,
       });
-    return AccommodationCategory
+    return AccommodationCategory;
 }
