@@ -1,6 +1,7 @@
 const db = require("../models");
 const Accommodation = db.accommodation;
 const Op = db.Sequelize.Op;
+
 // Create and Save a new Accommodation
 exports.create = (req, res) => {
   // Validate request
@@ -14,9 +15,9 @@ exports.create = (req, res) => {
   const accommodation = {
     id: req.body.id,
     title: req.body.title,
-    desc: req.body.desc,
-    category: req.body.category,
+    accommodationCategoryId: req.body.accommodationCategoryId,
   };
+
   // Save Accommodation in the database
   Accommodation.create(accommodation)
     .then((data) => {
@@ -29,21 +30,37 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all Accommodations from the database.
+
+// Retrieve all Accommodations from the database with optional category name filtering.
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  Accommodation.findAll({ where: condition })
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving accommodations.",
-      });
+  let condition = {};
+  const { categoryName } = req.query;
+
+  if (categoryName) {
+    // Including the related model AccommodationCategory
+    condition = {
+      '$AccommodationCategory.categoryName$': categoryName
+    };
+  }
+
+  Accommodation.findAll({
+    where: condition,
+    include: [{
+      model: db.accommodationCategory,
+      as: 'accommodationCategory',
+      attributes: [], // This might be unnecessary if you want to include attributes
+    }]
+  })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving accommodations."
     });
+  });
 };
+
 
 // Find a single Accommodation with an id
 exports.findAllForUser = (req, res) => {
@@ -66,6 +83,7 @@ exports.findAllForUser = (req, res) => {
       });
     });
 };
+
 // Find a single Accommodation with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -85,6 +103,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 // Update a Accommodation by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -108,6 +127,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 // Delete a Accommodation with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -131,6 +151,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all Accommodations from the database.
 exports.deleteAll = (req, res) => {
   Accommodation.destroy({

@@ -9,16 +9,13 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        desc: {
-            type: Sequelize.STRING,
-            allowNull: false,
-        },
-        category: {
+        accommodationCategoryId: {
             type: Sequelize.INTEGER,
-            allowNull: false,
+            allowNull: false
         },
     }, {
+        tableName: 'accommodations',
         timestamps: false,
       });
-    return Accommodation
+    return Accommodation;
 }

@@ -28,7 +28,7 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all AccommodationCategorys from the database.
+// Retrieve all AccommodationCategories from the database.
 exports.findAll = (req, res) => {
   const id = req.query.id;
   var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
@@ -109,7 +109,7 @@ exports.delete = (req, res) => {
       });
     });
 };
-// Delete all AccommodationCategorys from the database.
+// Delete all AccommodationCategories from the database.
 exports.deleteAll = (req, res) => {
   AccommodationCategory.destroy({
     where: {},
