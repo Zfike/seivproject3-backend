@@ -9,9 +9,9 @@ exports.create = (req, res) => {
     userId: req.body.userId,
     userAccommodationRequestId: req.body.userAccommodationRequestId,
     permission: req.body.permission,
+    accommodationId: req.body.accommodationId,
     accommodationCategoryId: req.body.accommodationCategoryId,
-    description: req.body.description, // Include the description from the request body
-    status: req.body.status || 'pending'  // Set status to 'pending' by default if not provided
+    description: req.body.description,
   })
   .then((userAccommodation) => {
     res.send(userAccommodation);
@@ -34,6 +34,11 @@ exports.findAll = (req, res) => {
         attributes: ['fName', 'lName'],
       },
       {
+        model: db.accommodation,
+        as: 'accommodation',
+        attributes: ['title'],
+      },
+      {
         model: db.accommodationCategory,
         as: 'accommodationCategory',
         attributes: ['categoryName'],
@@ -50,7 +55,6 @@ exports.findAll = (req, res) => {
   });
 };
 
-
 // Find all UserAccommodations for a user with an id
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
@@ -62,6 +66,11 @@ exports.findAllForUser = (req, res) => {
         model: db.user,
         as: 'user',
         attributes: ['fName', 'lName'],
+      },
+      {
+        model: db.accommodation,
+        as: 'accommodation',
+        attributes: ['title'],
       },
       {
         model: db.accommodationCategory,

@@ -17,6 +17,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
+    accommodationId: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
     accommodationCategoryId: {
       type: Sequelize.INTEGER,
       allowNull: false
