@@ -33,7 +33,7 @@ module.exports = (app) => {
             res.status(200).send(result)
         } catch (error) {
             console.error(error)
-            res.status(500).send("error sending confirmation email")
+            res.status(500).send("error sending approval email")
         }
     })
 
@@ -45,11 +45,11 @@ module.exports = (app) => {
                     to: req.body.to,
                 }
     
-                const result = await emailSender.approvalEmail(emailDetails)
+                const result = await emailSender.denialEmail(emailDetails)
                 res.status(200).send(result)
             } catch (error) {
                 console.error(error)
-                res.status(500).send("error sending confirmation email")
+                res.status(500).send("error sending denial email")
             }
         })
 
