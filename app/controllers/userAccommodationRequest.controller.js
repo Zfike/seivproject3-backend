@@ -29,7 +29,7 @@ exports.findAll = (req, res) => {
       {
         model: db.user,
         as: 'user',
-        attributes: ['fName', 'lName'],
+        attributes: ['fName', 'lName', 'email'],
       }
     ]
   })
@@ -54,7 +54,7 @@ exports.findAllForUser = (req, res) => {
       {
         model: db.user,
         as: 'user',
-        attributes: ['fName', 'lName'],
+        attributes: ['fName', 'lName', 'email'],
       }
     ]
   })
@@ -83,7 +83,7 @@ exports.findOne = (req, res) => {
       {
         model: db.user,
         as: 'user',
-        attributes: ['fName', 'lName'],
+        attributes: ['fName', 'lName', 'email'],
       }
     ]
   })
