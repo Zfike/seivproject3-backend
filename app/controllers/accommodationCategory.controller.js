@@ -28,10 +28,12 @@ exports.create = (req, res) => {
       });
     });
 };
-// Retrieve all AccommodationCategorys from the database.
+
+// Retrieve all AccommodationCategories from the database.
 exports.findAll = (req, res) => {
-  const id = req.query.id;
-  var condition = id ? { id: { [Op.like]: `%${id}%` } } : null;
+  const categoryName = req.query.categoryName;
+  let condition = categoryName ? { categoryName: { [Op.eq]: categoryName } } : null;
+
   AccommodationCategory.findAll({ where: condition })
     .then((data) => {
       res.send(data);
@@ -39,10 +41,11 @@ exports.findAll = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving accommodationCategorys.",
+          err.message || "Some error occurred while retrieving accommodationCategories.",
       });
     });
 };
+
 
 // Find a single AccommodationCategory with an id
 exports.findOne = (req, res) => {
@@ -109,7 +112,7 @@ exports.delete = (req, res) => {
       });
     });
 };
-// Delete all AccommodationCategorys from the database.
+// Delete all AccommodationCategories from the database.
 exports.deleteAll = (req, res) => {
   AccommodationCategory.destroy({
     where: {},
