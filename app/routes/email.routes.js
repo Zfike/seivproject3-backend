@@ -37,5 +37,21 @@ module.exports = (app) => {
         }
     })
 
+        //Accommodation denial email
+        router.post('/deny', async (req, res) => {
+            try {
+                const emailDetails = {
+                    from: req.body.from,
+                    to: req.body.to,
+                }
+    
+                const result = await emailSender.approvalEmail(emailDetails)
+                res.status(200).send(result)
+            } catch (error) {
+                console.error(error)
+                res.status(500).send("error sending confirmation email")
+            }
+        })
+
     app.use("/accommodations-t1/sendEmail", router)
 }

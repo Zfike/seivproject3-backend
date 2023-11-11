@@ -66,14 +66,32 @@ async function confirmationEmail(recipient) {
   };
 };
 
-async function approvalEmail(sender, recipient) {
-  console.log('Recipient:', recipient)
+async function approvalEmail(users) {
   try {
     const mailOptions = {
-      from: sender.from,
-      to: recipient.to,
+      from: users.from,
+      to: users.to,
       subject: 'Accommodation Request Confirmation',
       text: 'Your accommodations have been approved.'
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ' + info.response);
+    return 'Email sent successfully.';
+
+  } catch (error) {
+    console.error(error);
+    throw 'Email could not be sent.';
+  };
+};
+
+async function denialEmail(users) {
+  try {
+    const mailOptions = {
+      from: users.from,
+      to: users.to,
+      subject: 'Accommodation Request Confirmation',
+      text: 'Your accommodations have been declined. Reach out to your student success advisor'
     };
 
     const info = await transporter.sendMail(mailOptions);
@@ -90,4 +108,5 @@ module.exports = {
   sendEmail,
   confirmationEmail,
   approvalEmail,
+  denialEmail,
 };
