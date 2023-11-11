@@ -38,29 +38,9 @@ require("./app/routes/student.routes")(app);
 require("./app/routes/studentCourse.routes")(app);
 require("./app/routes/userAccommodation.routes")(app);
 require("./app/routes/userAccommodationRequest.routes")(app);
+require("./app/routes/email.routes")(app);
 
 
-app.post('/send-email', async (req, res) => {
-  try {
-    // Get the email details from the request body
-    const emailDetails = req.body;
-
-    // You may need to verify and construct the email details as needed
-    const notificationData = {
-      recipient: 'jaxen.mcray@eagles.oc.edu', // Replace with actual recipient email
-      subject: emailDetails.subject,
-      content: emailDetails.content,
-    };
-
-    // Send the email using the email sender module
-    const result = await emailSender.sendEmail(notificationData);
-    res.status(200).send(result);
-
-  } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).send('Error sending email.');
-  }
-});
 
 // Handle SPA client routing, fallback to index.html for any other route
 app.use(history());
@@ -68,6 +48,11 @@ app.use(history());
 // Assuming the backend and frontend are siblings in the directory structure
 // and the Vite build output goes to "dist" directory in the frontend.
 app.use(express.static(path.resolve(__dirname, '..', 'seivproject3-frontend', 'dist')));
+
+// Simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to bezkoder application." });
+});
 
 
 // Set port, listen for requests
