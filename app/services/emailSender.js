@@ -28,6 +28,27 @@ async function sendEmail(recipient) {
   }
 }
 
+// Function to send a test email
+async function adminNotification(recipient) {
+  try {
+    // Configure the email data
+    const mailOptions = {
+      from: 'z.fike@eagles.oc.edu',
+      to: recipient,
+      subject: 'No Subject, Test Email',
+      text: 'Test' // Include your test content
+    };
+
+    // Send the email
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent: ' + info.response);
+    return 'Email sent successfully.';
+  } catch (error) {
+    console.error(error);
+    throw 'Email could not be sent.';
+  }
+}
+
 async function confirmationEmail(recipient) {
   console.log('Recipient:', recipient)
   try {
@@ -35,8 +56,7 @@ async function confirmationEmail(recipient) {
       from:'z.fike@eagles.oc.edu',
       to: recipient.to,
       subject: 'Accommodation Request Confirmation',
-      html: `Initial Accommodations Request Email<br>
-              Thank you for submitting your request for accommodations. We require supporting documentation to fulfill<br>
+      html: ` Thank you for submitting your request for accommodations. We require supporting documentation to fulfill<br>
               your request.<br>
               Documentation must be from an appropriate, qualified professional who has seen you within the past 18<br>
               months and must contain the following information:<br>
