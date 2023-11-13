@@ -1,10 +1,11 @@
 const nodemailer = require("nodemailer");
+const googlePass = process.env.GOOGLE_APP_PASS
 // Create a nodemailer transporter with your email service credentials
 const transporter = nodemailer.createTransport({
   service: 'Gmail', // e.g., 'Gmail'
   auth: {
     user: 'z.fike@eagles.oc.edu', // Your email address
-    pass: 'mwln pwie ucrj aofi' // Your email password
+    pass: googlePass // Your email password
   }
 });
 // Function to send a test email
