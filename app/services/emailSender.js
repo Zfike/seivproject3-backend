@@ -29,14 +29,16 @@ async function sendEmail(recipient) {
 }
 
 // Function to send a test email
-async function adminNotification(recipient) {
+// Function to send an admin notification email
+async function adminNotification(userDetails) {
   try {
     // Configure the email data
     const mailOptions = {
       from: 'z.fike@eagles.oc.edu',
-      to: recipient,
-      subject: 'No Subject, Test Email',
-      text: 'Test' // Include your test content
+      to: ['z.fike@eagles.oc.edu', 'jaxen.mcray@eagles.oc.edu'],
+      subject: 'Student Accommodation Request',
+      text: `${userDetails.fName} ${userDetails.lName} has made a request for accommodations.
+            \nPlease review the request.`,
     };
 
     // Send the email
@@ -45,12 +47,11 @@ async function adminNotification(recipient) {
     return 'Email sent successfully.';
   } catch (error) {
     console.error(error);
-    throw 'Email could not be sent.';
+    throw 'Email could not be sent to admin.';
   }
 }
 
 async function confirmationEmail(recipient) {
-  console.log('Recipient:', recipient)
   try {
     const mailOptions = {
       from:'z.fike@eagles.oc.edu',
@@ -71,7 +72,7 @@ async function confirmationEmail(recipient) {
               and email it to me.<br>
               Once the information is submitted, we will schedule a time to meet to discuss the details (in person or via<br>
               video conference). After our meeting, I will email your professors your specific ADA academic<br>
-              accommodations letter. Accommodations <b>MUST BE RENEWED EACH SEMESTER.<b><br>
+              accommodations letter. Accommodations <b>MUST BE RENEWED EACH SEMESTER.</b><br>
               Please let me know if you have any other questions or concerns. I look forward to hearing from you.<br>
               Sincerely,<br>
               Student Success Services`
@@ -129,6 +130,7 @@ async function denialEmail(users) {
 
 module.exports = {
   sendEmail,
+  adminNotification,
   confirmationEmail,
   approvalEmail,
   denialEmail,

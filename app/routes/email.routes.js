@@ -53,5 +53,21 @@ module.exports = (app) => {
             }
         })
 
+        //Amin notification email
+        router.post('/notify', async (req, res) => {
+            try {
+                const emailDetails = {
+                    fName: req.body.fName,
+                    lName: req.body.lName
+                }
+
+                const result = await emailSender.adminNotification(emailDetails)
+                res.status(200).send(result)
+            } catch (error) {
+                console.error(error)
+                res.status(500).send("error sending notification email")
+            }
+        })
+
     app.use("/accommodations-t1/sendEmail", router)
 }
