@@ -11,7 +11,6 @@ exports.create = (req, res) => {
     });
     return;
   }
-
   // Create a Student
   const student = {
     id: req.body.id,
@@ -22,7 +21,6 @@ exports.create = (req, res) => {
     // refresh_token: req.body.refresh_token,
     // expiration_date: req.body.expiration_date
   };
-
   // Save Student in the database
   Student.create(student)
     .then((data) => {

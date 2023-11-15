@@ -11,7 +11,6 @@ exports.create = (req, res) => {
     });
     return;
   }
-
   // Create a User
   const user = {
     id: req.body.id,
@@ -21,7 +20,6 @@ exports.create = (req, res) => {
     // refresh_token: req.body.refresh_token,
     // expiration_date: req.body.expiration_date
   };
-
   // Save User in the database
   User.create(user)
     .then((data) => {

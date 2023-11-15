@@ -4,11 +4,11 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new userAccommodationRequest
 exports.create = (req, res) => {
-  // Assuming req.body has userId, permission, and description
   userAccommodationRequest.create({
     userId: req.body.userId,
     permission: req.body.permission,
-    description: req.body.description, // Include the description from the request body
+    semesterId: req.body.semesterId,
+    description: req.body.description,
     status: req.body.status || 'Pending'  // Set status to 'Pending' by default if not provided
   })
   .then((userAccommodationRequest) => {
@@ -30,6 +30,11 @@ exports.findAll = (req, res) => {
         model: db.user,
         as: 'user',
         attributes: ['fName', 'lName', 'email'],
+      },
+      {
+        model: db.semester,
+        as: 'semester',
+        attributes: ['title', 'startDate', 'endDate'],
       }
     ]
   })
@@ -43,7 +48,6 @@ exports.findAll = (req, res) => {
   });
 };
 
-
 // Find all userAccommodationRequests for a user with an id
 exports.findAllForUser = (req, res) => {
   const userId = req.params.userId;
@@ -55,6 +59,11 @@ exports.findAllForUser = (req, res) => {
         model: db.user,
         as: 'user',
         attributes: ['fName', 'lName', 'email'],
+      },
+      {
+        model: db.semester,
+        as: 'semester',
+        attributes: ['title', 'startDate', 'endDate'],
       }
     ]
   })
@@ -84,6 +93,11 @@ exports.findOne = (req, res) => {
         model: db.user,
         as: 'user',
         attributes: ['fName', 'lName', 'email'],
+      },
+      {
+        model: db.semester,
+        as: 'semester',
+        attributes: ['title', 'startDate', 'endDate'],
       }
     ]
   })
@@ -150,6 +164,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all userAccommodationRequests from the database.
 exports.deleteAll = (req, res) => {
   userAccommodationRequest.destroy({

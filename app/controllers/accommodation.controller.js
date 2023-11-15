@@ -48,7 +48,7 @@ exports.findAll = (req, res) => {
     include: [{
       model: db.accommodationCategory,
       as: 'accommodationCategory',
-      attributes: [], // This might be unnecessary if you want to include attributes
+      // attributes: [],
     }]
   })
   .then(data => {

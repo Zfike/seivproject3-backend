@@ -1,6 +1,7 @@
 const db = require("../models");
 const AccommodationCategory = db.accommodationCategory;
 const Op = db.Sequelize.Op;
+
 // Create and Save a new AccommodationCategory
 exports.create = (req, res) => {
   // Validate request
@@ -46,7 +47,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-
 // Find a single AccommodationCategory with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -66,6 +66,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 // Update a AccommodationCategory by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -89,6 +90,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 // Delete a AccommodationCategory with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -112,6 +114,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all AccommodationCategories from the database.
 exports.deleteAll = (req, res) => {
   AccommodationCategory.destroy({

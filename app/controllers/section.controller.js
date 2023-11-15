@@ -1,6 +1,7 @@
 const db = require("../models");
 const Section = db.section;
 const Op = db.Sequelize.Op;
+
 // Create and Save a new Section
 exports.create = (req, res) => {
   // Validate request
@@ -33,6 +34,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 // Retrieve all Sections from the database.
 exports.findAll = (req, res) => {
   const id = req.query.id;
@@ -68,6 +70,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 // Update a Section by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -91,6 +94,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 // Delete a Section with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -114,6 +118,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all Sections from the database.
 exports.deleteAll = (req, res) => {
   Section.destroy({

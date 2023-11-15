@@ -9,9 +9,6 @@ module.exports = (app) => {
     // Retrieve all Accommodations
     router.get("/", [authenticate], semesters.findAll);
   
-    // Retrieve all Accommodations for user
-    // router.get("/userAccommodation/:userId", [authenticate], semesters.findAllForUser);
-  
     // Retrieve a single Accommodation with id
     router.get("/:id", [authenticate], semesters.findOne);
   

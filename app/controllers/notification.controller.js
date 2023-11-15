@@ -1,6 +1,7 @@
 const db = require("../models");
 const Notification = db.notification;
 const Op = db.Sequelize.Op;
+
 // Create and Save a new Notification
 exports.create = (req, res) => {
   // Validate request
@@ -28,6 +29,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 // Retrieve all Notifications from the database.
 exports.findAll = (req, res) => {
   const id = req.query.id;
@@ -63,6 +65,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 // Update a Notification by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -86,6 +89,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 // Delete a Notification with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -109,6 +113,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all Notifications from the database.
 exports.deleteAll = (req, res) => {
   Notification.destroy({

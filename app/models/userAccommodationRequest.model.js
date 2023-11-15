@@ -17,6 +17,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       allowNull: true
     },
+    semesterId: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
     status: {
       type: Sequelize.ENUM,
       values: ['Pending', 'Approved', 'Declined'],
