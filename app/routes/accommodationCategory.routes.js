@@ -3,25 +3,22 @@ module.exports = (app) => {
     const { authenticate } = require("../authorization/authorization.js");
     var router = require("express").Router();
   
-    // Create a new Accommodation
+    // Create a new Accommodation Category
     router.post("/", [authenticate], accommodationCategories.create);
   
-    // Retrieve all Accommodations
+    // Retrieve all Accommodations Categories
     router.get("/", [authenticate], accommodationCategories.findAll);
   
-    // Retrieve all Accommodations for user
-    // router.get("/userAccommodation/:userId", [authenticate], accommodationCategories.findAllForUser);
-  
-    // Retrieve a single Accommodation with id
+    // Retrieve a single Accommodation Category with id
     router.get("/:id", [authenticate], accommodationCategories.findOne);
   
-    // Update a Accommodation with id
+    // Update a Accommodation Category with id
     router.put("/:id", [authenticate], accommodationCategories.update);
   
-    // Delete a Accommodation with id
+    // Delete a Accommodation Category with id
     router.delete("/:id", [authenticate], accommodationCategories.delete);
   
-    // Delete all Accommodations
+    // Delete all Accommodation Categories
     router.delete("/", [authenticate], accommodationCategories.deleteAll);
   
     app.use("/accommodations-t1/accommodationCategories", router);

@@ -126,24 +126,36 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
   Accommodation.update(req.body, {
-    where: { id: id },
+    where: { id: id }
   })
-    .then((num) => {
-      if (num == 1) {
-        res.send({
-          message: "Accommodation was updated successfully.",
+  .then(num => {
+    if (num == 1) {
+      // Return the updated accommodation data
+      Accommodation.findByPk(id, {
+        include: [{
+          model: db.accommodationCategory,
+          as: 'accommodationCategory'
+        }]
+      })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error retrieving updated Accommodation with id=" + id,
         });
-      } else {
-        res.send({
-          message: `Cannot update Accommodation with id=${id}. Maybe Accommodation was not found or req.body is empty!`,
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error updating Accommodation with id=" + id,
       });
+    } else {
+      res.send({
+        message: `Cannot update Accommodation with id=${id}. Maybe Accommodation was not found or req.body is empty!`,
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error updating Accommodation with id=" + id,
     });
+  });
 };
 
 // Delete a Accommodation with the specified id in the request

@@ -5,9 +5,9 @@ const Op = db.Sequelize.Op;
 // Create and Save a new AccommodationCategory
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.id) {
+  if (!req.body.categoryName) {
     res.status(400).send({
-      message: "Content can not be empty!",
+      message: "Category name can not be empty!",
     });
     return;
   }
@@ -73,20 +73,27 @@ exports.update = (req, res) => {
   AccommodationCategory.update(req.body, {
     where: { id: id },
   })
-    .then((num) => {
+    .then(num => {
       if (num == 1) {
-        res.send({
-          message: "AccommodationCategory was updated successfully.",
-        });
+        // Find the updated category and send it back
+        AccommodationCategory.findByPk(id)
+          .then(data => {
+            res.send(data);
+          })
+          .catch(err => {
+            res.status(500).send({
+              message: "Error retrieving updated AccommodationCategory with id=" + id,
+            });
+          });
       } else {
         res.send({
           message: `Cannot update AccommodationCategory with id=${id}. Maybe AccommodationCategory was not found or req.body is empty!`,
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       res.status(500).send({
-        message: err.message || "Error updating AccommodationCategory with id=" + id,
+        message: "Error updating AccommodationCategory with id=" + id,
       });
     });
 };
