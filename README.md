@@ -28,3 +28,12 @@ A special thanks to the those whose contributions have been the key in the succe
 -David North
 -Julia Flores
 
+# TALONS UP
+________________________
+    `'-.,________,,..-  ___ \________
+       > `'-.,_____,,.-`<_>\ )__     `\
+         >            `'-._    _)____  \
+          >          _.-'`  _______  `\ |
+           >   _,,..--'''```       `'-.\|
+     >-'``                        `'
+
