@@ -93,6 +93,7 @@ exports.update = (req, res) => {
 
 // Delete a Semester with the specified id in the request
 exports.delete = (req, res) => {
+  console.log('Received from client:', req.body);
   const id = req.params.id;
   Semester.destroy({
     where: { id: id },
