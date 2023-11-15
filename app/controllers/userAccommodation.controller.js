@@ -9,6 +9,7 @@ exports.create = (req, res) => {
     userId: req.body.userId,
     userAccommodationRequestId: req.body.userAccommodationRequestId,
     permission: req.body.permission,
+    semesterId: req.body.semesterId,
     accommodationId: req.body.accommodationId,
     accommodationCategoryId: req.body.accommodationCategoryId,
     description: req.body.description,
@@ -42,6 +43,11 @@ exports.findAll = (req, res) => {
         model: db.accommodationCategory,
         as: 'accommodationCategory',
         attributes: ['categoryName'],
+      },
+      {
+        model: db.semester,
+        as: 'semester',
+        attributes: ['title', 'startDate', 'endDate'],
       }
     ]
   })
@@ -76,6 +82,11 @@ exports.findAllForUser = (req, res) => {
         model: db.accommodationCategory,
         as: 'accommodationCategory',
         attributes: ['categoryName'],
+      },
+      {
+        model: db.semester,
+        as: 'semester',
+        attributes: ['title', 'startDate', 'endDate'],
       }
     ]
   })
@@ -110,6 +121,11 @@ exports.findOne = (req, res) => {
         model: db.accommodationCategory,
         as: 'accommodationCategory',
         attributes: ['categoryName'],
+      },
+      {
+        model: db.semester,
+        as: 'semester',
+        attributes: ['title', 'startDate', 'endDate'],
       }
     ]
   })
@@ -176,6 +192,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all UserAccommodations from the database.
 exports.deleteAll = (req, res) => {
   UserAccommodation.destroy({

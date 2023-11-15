@@ -1,6 +1,7 @@
 const db = require("../models");
 const Semester = db.semester;
 const Op = db.Sequelize.Op;
+
 // Create and Save a new Semester
 exports.create = (req, res) => {
   // Validate request
@@ -13,6 +14,7 @@ exports.create = (req, res) => {
   // Create a Semester
   const semester = {
     id: req.body.id,
+    title: req.body.title,
     startDate: req.body.startDate,
     endDate: req.body.endDate,
   };
@@ -28,6 +30,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 // Retrieve all Semesters from the database.
 exports.findAll = (req, res) => {
   const id = req.query.id;
@@ -63,6 +66,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 // Update a Semester by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -86,6 +90,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 // Delete a Semester with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -109,6 +114,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all Semesters from the database.
 exports.deleteAll = (req, res) => {
   Semester.destroy({

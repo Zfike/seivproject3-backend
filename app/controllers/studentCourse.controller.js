@@ -1,6 +1,7 @@
 const db = require("../models");
 const StudentCourse = db.studentCourse;
 const Op = db.Sequelize.Op;
+
 // Create and Save a new StudentCourse
 exports.create = (req, res) => {
   // Validate request
@@ -26,6 +27,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 // Retrieve all StudentCourses from the database.
 exports.findAll = (req, res) => {
   const id = req.query.id;
@@ -61,6 +63,7 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
 // Update a StudentCourse by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
@@ -84,6 +87,7 @@ exports.update = (req, res) => {
       });
     });
 };
+
 // Delete a StudentCourse with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
@@ -107,6 +111,7 @@ exports.delete = (req, res) => {
       });
     });
 };
+
 // Delete all StudentCourses from the database.
 exports.deleteAll = (req, res) => {
   StudentCourse.destroy({

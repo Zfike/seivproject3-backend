@@ -4,7 +4,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-    },
+      },
+      title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       startDate: {
         type: Sequelize.DATE,
         allowNull: false,
