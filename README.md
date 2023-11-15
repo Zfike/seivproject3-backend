@@ -56,7 +56,7 @@ A special thanks to the those whose contributions have been the key in the succe
                       /' /\     \  \     ,v=.  ((
                     .^. / /\     "  }__ //===-  `
                    / / ' '  "-.,__ {---(==-
-                 .^ '       :  T  ~"   ll       -Row
+                 .^ '       :  T  ~"   ll       
                 / .  .  . : | :!        \\
                (_/  /   | | j-"          ~^
                  ~-&lt;_(_.^-~"
