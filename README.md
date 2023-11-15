@@ -12,10 +12,10 @@ Below are a couple of examples to help explain the foundation of the backend for
 ### -Users
 The User Model is the foundation of our project storing all of the user information. Our project leverages Google Authentication allowing users to securely log in with their Google credentials. This ensures a seamless and trustworthy authentication process, contributing to a user-friendly experience.
 
-### Sessions
+### -Sessions
 To maintain a secure and persistent user experience we have implemented the Session Model. This model handles the creation and management of user sessions after successful authentication. Sessions are used for keeping users logged in and to provide a seamless experience moving between different parts of the website.
 
-### Conclusion
+### -Conclusion
 We encourage you to explore the backend codebase to gain a deeper understanding of how these models interact and contribute to the functioning of our project. 
 
 ## Project Contributors
